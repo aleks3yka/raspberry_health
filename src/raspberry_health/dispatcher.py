@@ -15,7 +15,7 @@ async def send_plot(message: Message, hours: Match[str], session_maker: async_se
 
     data = await get_data(session_maker, datetime.fromtimestamp(time() - timeDelta))
     if len(data) == 0:
-        message.answer("No data")
+        await message.answer("No data")
         return
     pic_name = str(message.chat.id) + "pic.png"
     draw_plot(data, pic_name)
