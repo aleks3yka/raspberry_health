@@ -7,6 +7,7 @@ class Base(DeclarativeBase):
     pass
 
 class Measurement(Base):
+    __tablename__ = "measurements"
     id: Mapped[int] = mapped_column(primary_key=True)
     temperature: Mapped[float]
     source: Mapped[str]
