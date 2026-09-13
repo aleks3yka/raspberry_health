@@ -1,0 +1,23 @@
+[project]
+name = "raspberry-health"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "alekseyka", email = "aleksey.isk@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "aiogram>=3.31.0",
+    "aiosqlite>=0.22.1",
+    "apscheduler>=3.11.3",
+    "matplotlib>=3.11.2",
+    "sqlalchemy>=2.0.52",
+]
+
+[project.scripts]
+raspberry-health = "raspberry_health:main"
+
+[build-system]
+requires = ["uv_build>=0.12.10,<0.13.0"]
+build-backend = "uv_build"
