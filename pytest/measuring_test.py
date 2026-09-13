@@ -1,9 +1,10 @@
 import raspberry_health.measuring as measuring
-import pytest_asyncio
+
 import pytest
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine, async_sessionmaker
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 from sqlalchemy import select
-from raspberry_health.database import Base, Measurement
+from raspberry_health.database import Measurement
+from fixtures import engine, session_maker
 
 def test_get_temp_zone():
     res = measuring.detect_thermalzone()
@@ -18,22 +19,6 @@ def test_get_temp():
 def test_class():
     reader = measuring.Temp_reader()
     assert 0 <= reader.get_temp() <= 100
-
-@pytest_asyncio.fixture
-async def engine():
-    engine = create_async_engine("sqlite+aiosqlite:///test.db")
-
-    async with engine.begin() as connection:
-        await connection.run_sync(Base.metadata.drop_all)
-        await connection.run_sync(Base.metadata.create_all)
-
-    yield engine
-
-    await engine.dispose()
-
-@pytest_asyncio.fixture
-async def session_maker(engine: AsyncEngine) -> async_sessionmaker[AsyncEngine]:
-    return async_sessionmaker(engine)
 
 @pytest.fixture
 def temp_reader() -> measuring.Temp_reader:
