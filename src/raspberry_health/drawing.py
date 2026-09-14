@@ -22,6 +22,7 @@ def draw_plot(dots: Sequence[Tuple[datetime, float]], filename: str):
 async def get_data(session_maker: async_sessionmaker[AsyncSession], date_from: datetime)\
       -> Sequence[Tuple[datetime, float]]:
     async with session_maker() as session:
-        res = await session.execute(select(Measurement.date, Measurement.temperature))
+        res = await session.execute(select(Measurement.date, Measurement.temperature)
+                                    .where(Measurement.date >= date_from))
     return res.all()
     
